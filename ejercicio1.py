@@ -2,7 +2,7 @@
 sustituyendo los múltiplos de 3 por la palabra "Fizz" y, a su vez, los múltiplos de 5 por "Buzz".
 Cuando, al mismo tiempo, son múltiplos de 3 y 5, utiliza 'FizzBuzz'"""
 
-def fizzBuzz(n):
+def fizz_buzz(n):
     for i in range(1, n + 1):
         if i % 3 == 0 and i % 5 == 0:
             print("FizzBuzz")
@@ -13,4 +13,4 @@ def fizzBuzz(n):
         else:
             print(i)
 
-fizzBuzz(40)
+fizz_buzz(40)
