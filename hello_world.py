@@ -12,4 +12,4 @@ def fizzbuzz(n):
 
 
 # Ejemplo de uso
-fizzbuzz(30)
+fizzbuzz(40)
