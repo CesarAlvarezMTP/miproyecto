@@ -21,18 +21,18 @@ parametros = {
     "b": B
 }
 
-respuesta = requests.get(URL, params=parametros)
+response = requests.get(URL, params=parametros)
 
 
 
 
-print(respuesta.text)
+print(response.text)
 
-if float(respuesta.text) !=3
+if float(response.text) !=3
     raise AssertionError()
 data = {
     "a": A,
     "b": B
 }
 
-respuesta = requests.post(URL, params=parametros)
+response = response.post(URL, params=parametros)
