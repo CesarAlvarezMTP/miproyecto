@@ -1,25 +1,34 @@
-from selenium import webdriver
+"""
+Imprimir por pantalla la temperatura en Madrid y añadir un mensaje indicando en cual de estas franjas está:
+franja 1:  < 25ºC
+franja 2:  25ºC < x < 30ºC
+franja 3:  > 30ºC
+"""
+import time
 
-driver = webdriver.Chrome('C:/Users/cesar.alvarez/workspaces/test-lab/chromedriver.exe')
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+T_B = 25
+T_A = 30
+CIUDAD = "Madrid"
+
+driver = webdriver.Chrome()
 
 try:
-    driver.get('https://www.google.com')
-    accept_button = driver.find_element(By.XPATH, '//*[@id="L2AGLb"]/div').click()
-    search_box = driver.find_element_by_name('q')
-    search_box.send_keys('temperatura en Madrid')
-    search_box.submit()
+    driver.get("https://www.google.com/search?q=temperatura+en+Madrid&rlz=1C1CHBF_esES937ES937&oq=temperatura+en+Madrid&aqs=chrome..69i57j0i512l9.830j0j7&sourceid=chrome&ie=UTF-8")
 
+    texto_temperatura = driver.find_element(By.ID, 'wob_tm').text
 
-    result_element = driver.find_element_by_id('wob_tm')
-    temperatura = int(result_element.text)
+    print(texto_temperatura)
 
-
-    if temperatura > 30:
-        print("Alto")
+    if float(texto_temperatura) < T_B:
+        print("temp baja")
+    elif T_B < float(texto_temperatura) < T_A:
+        print("temp media")
     else:
-        print("No tan alto")
+        print("temp alta")
 
 finally:
-  time.sleep(5)
-  driver.close()
-  driver.quit()
+    time.sleep(3)
+    driver.close()
