@@ -17,17 +17,16 @@ datos_filtrados = []
 
 try:
     for fila in filas:
-            columnas = fila.find_elements_by_css_selector('td')
-            apellidos = columnas[0].text
-            nombre = columnas[1].text
-            sueldo = columnas[3].text.replace('$', '').replace(',', '')
+        columnas = fila.find_elements_by_css_selector('td')
+        apellidos = columnas[0].text
+        nombre = columnas[1].text
+        sueldo = columnas[3].text.replace('$', '').replace(',', '')
 
-            if float(sueldo) > 50:
-                datos_filtrados.append((nombre, apellidos, sueldo))
-
+        if float(sueldo) > 50:
+            datos_filtrados.append((nombre, apellidos, sueldo))
 
     for datos in datos_filtrados:
-        print(datos[0],datos[1],datos[2])
+        print(datos[0], datos[1], datos[2])
 
 finally:
     driver.quit()
