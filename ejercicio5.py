@@ -1,32 +1,49 @@
 """
 Mostrar por pantalla el nombre de las personas con más de $50 en esta tabla: https://the-internet.herokuapp.com/tables
-
 """
 
+import requests
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 URL = "https://the-internet.herokuapp.com/tables"
 
+MIN = 50
+
+# response = requests.get(URL).text
+
+
+def get_dollars(d, fila):
+    celda = d.find_element(By.CSS_SELECTOR, f"#table1 > tbody > tr:nth-child({fila}) > td:nth-child(4)")
+    texto_celda = celda.text
+    return int(texto_celda.split(".")[0].lstrip("$"))
+
+
+def get_persona(d, fila):
+    celda = d.find_element(By.CSS_SELECTOR, f"#table1 > tbody > tr:nth-child({fila}) > td:nth-child(1)")
+    texto_celda = celda.text
+    return texto_celda
+
+
 driver = webdriver.Chrome()
-driver.get(URL)
-
-tabla = driver.find_element_by_id("table1")
-filas = tabla.find_elements_by_css_selector('tbody tr')
-
-datos_filtrados = []
-
 try:
-    for fila in filas:
-        columnas = fila.find_elements_by_css_selector('td')
-        apellidos = columnas[0].text
-        nombre = columnas[1].text
-        sueldo = columnas[3].text.replace('$', '').replace(',', '')
+    driver.get(URL)
+    dollars = []
+    for i in range(4):
+        dollars.append(get_dollars(driver, i + 1))
 
-        if float(sueldo) > 50:
-            datos_filtrados.append((nombre, apellidos, sueldo))
+    filas_con_mas_de_50 = []
+    for i, dollar in enumerate(dollars):
+        if dollar > 50:
+            filas_con_mas_de_50.append(i)
 
-    for datos in datos_filtrados:
-        print(datos[0], datos[1], datos[2])
+    personas = []
+    for i in range(4):
+        personas.append(get_persona(driver, i + 1))
 
 finally:
     driver.quit()
+
+
+for fila in filas_con_mas_de_50:
+    print(personas[fila])
